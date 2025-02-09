@@ -1,11 +1,12 @@
 {
   "name": "thanaphat-sr-713-lab02",
   "version": "1.0.0",
-  "main": "TypeScript.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "ts-node src/server.ts",
     "build": "tsc",
-    "dev": "ts-node src/server.ts"
+    "dev": "ts-node src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,15 +19,12 @@
     "url": "https://github.com/Thanaphat-Sr/Thanaphat-Sr-713-Lab02/issues"
   },
   "homepage": "https://github.com/Thanaphat-Sr/Thanaphat-Sr-713-Lab02#readme",
-  "description": "",
   "devDependencies": {
-    "@types/express": "^5.0.0",
     "@types/node": "^22.13.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "express": "^4.21.2",
     "thanaphat-sr-713-lab02": "file:"
   }
 }

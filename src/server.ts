@@ -6,6 +6,8 @@ const port = 3000
 //   res.send('Hello World!')
 // })
 
+app.use(express.json()); // Middleware to parse JSON bodies
+
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
   })
@@ -224,3 +226,28 @@ app.get("/books/:id", (req: Request, res: Response) => {
     }
   });
 //http://localhost:3000/books/1
+
+// Endpoint to add a new event
+app.post("/events", (req: Request, res: Response) => {
+  const newEvent: Event = req.body;
+  newEvent.id = events.length + 1;
+  events.push(newEvent);
+  res.json(newEvent);
+});
+
+// Endpoint to add or update a book
+app.post("/books", (req: Request, res: Response) => {
+  const newBook: Book = req.body;
+  const existingBookIndex = books.findIndex((book) => book.id === newBook.id);
+
+  if (existingBookIndex !== -1) {
+      // Update existing book
+      books[existingBookIndex] = newBook;
+      res.json({ message: "Book updated", book: newBook });
+  } else {
+      // Add new book
+      newBook.id = books.length + 1;
+      books.push(newBook);
+      res.json({ message: "Book added", book: newBook });
+  }
+});
