@@ -200,3 +200,27 @@ interface Event {
       res.json(books);
     }
   });
+
+// Endpoint to get event by ID
+app.get("/events/:id", (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+    const event = events.find((event) => event.id === id);
+    if (event) {
+      res.json(event);
+    } else {
+      res.status(404).send("Event not found");
+    }
+  });
+// http://localhost:3000/events/1
+
+// Endpoint to get book by ID
+app.get("/books/:id", (req: Request, res: Response) => {
+    const id = parseInt(req.params.id);
+    const book = books.find((book) => book.id === id);
+    if (book) {
+      res.json(book);
+    } else {
+      res.status(404).send("Book not found");
+    }
+  });
+//http://localhost:3000/books/1
