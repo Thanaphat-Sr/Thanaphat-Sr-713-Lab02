@@ -26,30 +26,30 @@ const books: Book[] = [
     }
 ];
 
-export function getBookByTitle(title: string): Book[] {
+export function getBookByTitle(title: string): Promise<Book[]> {
     const filteredBooks = books.filter((book) => book.title.toLowerCase().startsWith(title.toLowerCase()));
-    return filteredBooks;
+    return Promise.resolve(filteredBooks);
 }
 
-export function getAllBooks(): Book[] {
-    return books;
+export function getAllBooks(): Promise<Book[]> {
+    return Promise.resolve(books);
 }
 
-export function getBookById(id: number): Book | undefined {
-    return books.find((book) => book.id === id);
+export function getBookById(id: number): Promise<Book | undefined> {
+    return Promise.resolve(books.find((book) => book.id === id));
 }
 
-export function addOrUpdateBook(newBook: Book): { message: string, book: Book } {
+export function addOrUpdateBook(newBook: Book): Promise<{ message: string, book: Book }> {
     const existingBookIndex = books.findIndex((book) => book.id === newBook.id);
 
     if (existingBookIndex !== -1) {
         // Update existing book
         books[existingBookIndex] = newBook;
-        return { message: "Book updated", book: newBook };
+        return Promise.resolve({ message: "Book updated", book: newBook });
     } else {
         // Add new book
         newBook.id = books.length + 1;
         books.push(newBook);
-        return { message: "Book added", book: newBook };
+        return Promise.resolve({ message: "Book added", book: newBook });
     }
 }
