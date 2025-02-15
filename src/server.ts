@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import { getAllEvents, getEventByCategory, getEventById, addEvent } from "./services/EventService";
 import { getAllBooks, getBookByTitle, getBookById, addOrUpdateBook } from "./services/BookService";
-import type { Event } from "./services/EventService";
-import type { Book } from "./services/BookService";
+import type { Event } from "./models/Event";
+import type { Book } from "./models/Book";
 
 const app = express();
 const port = 3000;
