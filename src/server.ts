@@ -1,11 +1,9 @@
 import express, { Request, Response } from "express";
-import { getAllEvents, getEventByCategory, getEventById, addEvent } from "./services/EventService";
-import { getAllBooks, getBookByTitle, getBookById, addOrUpdateBook } from "./services/BookService";
-import type { Event } from "./models/Event";
-import type { Book } from "./models/Book";
 import multer from 'multer';
 import dotenv from 'dotenv';
-import { uploadFile } from './services/UploadFileService';
+import eventRoute from './routes/EventRoute';
+import bookRoute from './routes/BookRoute';
+import { uploadFile } from "./services/UploadFileService";
 
 dotenv.config();
 
@@ -23,60 +21,10 @@ app.get("/", (req: Request, res: Response) => {
     res.send(output);
 });
 
-app.get("/events", async (req: Request, res: Response) => {
-    if (req.query.category) {
-        const category = req.query.category as string;
-        const filteredEvents = await getEventByCategory(category);
-        res.json(filteredEvents);
-    } else {
-        res.json(await getAllEvents());
-    }
-});
-
-app.get("/events/:id", async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const event = await getEventById(id);
-    if (event) {
-        res.json(event);
-    } else {
-        res.status(404).send("ไม่พบ Event");
-    }
-});
-
-app.post("/events", async (req: Request, res: Response) => {
-    const newEvent: Event = req.body;
-    const addedEvent = await addEvent(newEvent);
-    res.json(addedEvent);
-});
-
-app.get("/books", async (req: Request, res: Response) => {
-    const title = req.query.title as string;
-    if (title) {
-        const filteredBooks = await getBookByTitle(title);
-        res.json(filteredBooks);
-    } else {
-        res.json(await getAllBooks());
-    }
-});
-
-app.get("/books/:id", async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id);
-    const book = await getBookById(id);
-    if (book) {
-        res.json(book);
-    } else {
-        res.status(404).send("ไม่พบหนังสือ");
-    }
-});
+app.use('/events', eventRoute);
+app.use('/books', bookRoute);
 
 const upload = multer({ storage: multer.memoryStorage() });
-
-app.post("/books", upload.single('file'), async (req: Request, res: Response) => {
-    const newBook: Book = req.body;
-    const file = req.file;
-    const result = await addOrUpdateBook(newBook, file);
-    res.json(result);
-});
 
 app.post('/upload', upload.single('file'), async (req: Request, res: Response): Promise<void> => {
   try {

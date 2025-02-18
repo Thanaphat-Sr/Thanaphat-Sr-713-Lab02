@@ -1,7 +1,9 @@
-// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/src/repository/BookRepository.ts
 import type { Book } from "../models/Book";
 import { uploadFile } from '../services/UploadFileService';
 import { Express } from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const books: Book[] = [
     {
@@ -44,8 +46,11 @@ export async function addOrUpdateBook(newBook: Book, file?: Express.Multer.File)
     const existingBookIndex = books.findIndex((book) => book.id === newBook.id);
 
     if (file) {
-        const bucket = 'book-images';
-        const filePath = `uploads`;
+        const bucket = process.env.SUPABASE_BUCKET_NAME;
+        const filePath = process.env.UPLOAD_DIR;
+        if (!bucket || !filePath) {
+            throw new Error('Bucket name or file path is not defined');
+        }
         const imageUrl = await uploadFile(bucket, filePath, file);
         newBook.imageUrl = imageUrl;
     }
