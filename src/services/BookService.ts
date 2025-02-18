@@ -13,6 +13,6 @@ export function getBookById(id: number): Promise<Book | undefined> {
   return repo.getBookById(id);
 }
 
-export function addOrUpdateBook(newBook: Book): Promise<{ message: string, book: Book }> {
+export function addOrUpdateBook(newBook: Book, file: Express.Multer.File | undefined): Promise<{ message: string, book: Book }> {
   return repo.addOrUpdateBook(newBook);
 }

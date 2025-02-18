@@ -67,13 +67,14 @@ app.get("/books/:id", async (req: Request, res: Response) => {
     }
 });
 
-app.post("/books", async (req: Request, res: Response) => {
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post("/books", upload.single('file'), async (req: Request, res: Response) => {
     const newBook: Book = req.body;
-    const result = await addOrUpdateBook(newBook);
+    const file = req.file;
+    const result = await addOrUpdateBook(newBook, file);
     res.json(result);
 });
-
-const upload = multer({ storage: multer.memoryStorage() });
 
 app.post('/upload', upload.single('file'), async (req: Request, res: Response): Promise<void> => {
   try {
@@ -84,7 +85,7 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response): 
     }
 
     const bucket = 'bucket01'; // Ensure this bucket exists in your Supabase storage
-    const filePath = `uploads/${file.originalname}`;
+    const filePath = `uploads`;
 
     const outputUrl = await uploadFile(bucket, filePath, file);
 

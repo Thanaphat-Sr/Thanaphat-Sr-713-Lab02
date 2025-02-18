@@ -1,4 +1,7 @@
+// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/src/repository/BookRepository.ts
 import type { Book } from "../models/Book";
+import { uploadFile } from '../services/UploadFileService';
+import { Express } from 'express';
 
 const books: Book[] = [
     {
@@ -34,8 +37,15 @@ export function getBookById(id: number): Promise<Book | undefined> {
     return Promise.resolve(books.find((book) => book.id === id));
 }
 
-export function addOrUpdateBook(newBook: Book): Promise<{ message: string, book: Book }> {
+export async function addOrUpdateBook(newBook: Book, file?: Express.Multer.File): Promise<{ message: string, book: Book }> {
     const existingBookIndex = books.findIndex((book) => book.id === newBook.id);
+
+    if (file) {
+        const bucket = 'book-images';
+        const filePath = `uploads`;
+        const imageUrl = await uploadFile(bucket, filePath, file);
+        newBook.imageUrl = imageUrl;
+    }
 
     if (existingBookIndex !== -1) {
         // Update existing book
