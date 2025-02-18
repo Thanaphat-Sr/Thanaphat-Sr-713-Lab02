@@ -1,8 +1,10 @@
-// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/src/services/UploadFileService.ts
 import s3Client from '../awsConfig';
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { Express } from 'express';
 import { randomBytes } from 'crypto';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 function generateSaltedFilename(originalName: string): string {
   const salt = randomBytes(16).toString('hex');
@@ -23,7 +25,7 @@ export async function uploadFile(bucket: string, filePath: string, file: Express
   try {
     const data = await s3Client.send(new PutObjectCommand(params));
     console.log('File uploaded successfully:', data);
-    const publicUrl = `https://{your-supabase-url}/storage/v1/object/public/${bucket}/${saltedFilePath}`;
+    const publicUrl = `${process.env.SUPABASE_OUTPUT_URL}/${saltedFilePath}`;
     console.log('File uploaded successfully:', publicUrl);
     return publicUrl;
   } catch (error) {

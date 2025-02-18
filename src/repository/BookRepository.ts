@@ -8,19 +8,22 @@ const books: Book[] = [
         id: 1,
         title: "Book One",
         author: "Author One",
-        publishedDate: "2021-01-01"
+        publishedDate: "2021-01-01",
+        fileUrl: ""
     },
     {
         id: 2,
         title: "Book Two",
         author: "Author Two",
-        publishedDate: "2021-02-01"
+        publishedDate: "2021-02-01",
+        fileUrl: ""
     },
     {
         id: 3,
         title: "Book Three",
         author: "Author Three",
-        publishedDate: "2021-03-01"
+        publishedDate: "2021-03-01",
+        fileUrl: ""
     }
 ];
 

@@ -1,13 +1,24 @@
-// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/src/awsConfig.ts
 import { S3Client } from "@aws-sdk/client-s3";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+const endpoint = process.env.SUPABASE_ENDPOINT_URL;
+const region = process.env.AWS_REGION;
+
+if (!accessKeyId || !secretAccessKey || !endpoint || !region) {
+  throw new Error("Missing required environment variables for AWS S3 configuration");
+}
 
 const s3Client = new S3Client({
   credentials: {
-    accessKeyId: "a9b2f1a2c85f18cac3d244c13ed98148",
-    secretAccessKey: "fe98d39269c52cba680fe0654826018a47b910878d5c004ee87c1518bfb2f124"
+    accessKeyId,
+    secretAccessKey
   },
-  endpoint: "https://ltnigyywitvsjpraqkct.supabase.co/storage/v1/s3",
-  region: "ap-southeast-1",
+  endpoint,
+  region,
   forcePathStyle: true
 });
 
