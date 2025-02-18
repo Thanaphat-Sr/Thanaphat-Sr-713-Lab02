@@ -1,3 +1,4 @@
+// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/src/server.ts
 import express, { Request, Response } from "express";
 import { getAllEvents, getEventByCategory, getEventById, addEvent } from "./services/EventService";
 import { getAllBooks, getBookByTitle, getBookById, addOrUpdateBook } from "./services/BookService";
@@ -85,9 +86,9 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response): 
     const bucket = 'bucket01'; // Ensure this bucket exists in your Supabase storage
     const filePath = `uploads/${file.originalname}`;
 
-    await uploadFile(bucket, filePath, file);
+    const outputUrl = await uploadFile(bucket, filePath, file);
 
-    res.status(200).send('File uploaded successfully.');
+    res.status(200).send(outputUrl);
   } catch (error) {
     res.status(500).send('Error uploading file.');
   }
