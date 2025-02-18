@@ -3,6 +3,8 @@ import { getAllEvents, getEventByCategory, getEventById, addEvent } from "./serv
 import { getAllBooks, getBookByTitle, getBookById, addOrUpdateBook } from "./services/BookService";
 import type { Event } from "./models/Event";
 import type { Book } from "./models/Book";
+import multer from 'multer';
+import { uploadFile } from './services/UploadFileService';
 
 const app = express();
 const port = 3000;
@@ -68,4 +70,25 @@ app.post("/books", async (req: Request, res: Response) => {
     const newBook: Book = req.body;
     const result = await addOrUpdateBook(newBook);
     res.json(result);
+});
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post('/upload', upload.single('file'), async (req: Request, res: Response): Promise<void> => {
+  try {
+    const file = req.file;
+    if (!file) {
+      res.status(400).send('No file uploaded.');
+      return;
+    }
+
+    const bucket = 'bucket01'; // Ensure this bucket exists in your Supabase storage
+    const filePath = `uploads/${file.originalname}`;
+
+    await uploadFile(bucket, filePath, file);
+
+    res.status(200).send('File uploaded successfully.');
+  } catch (error) {
+    res.status(500).send('Error uploading file.');
+  }
 });
