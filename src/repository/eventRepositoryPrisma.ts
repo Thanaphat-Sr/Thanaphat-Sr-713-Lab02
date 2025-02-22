@@ -13,9 +13,16 @@ export function getAllEvents(): Promise<Event[]> {
   return prisma.event.findMany();
 }
 
+export function getAllEventsWithOrganizer(): Promise<Event[]> {
+  return prisma.event.findMany({
+    include: { organizer: true },
+  });
+}
+
 export function getEventById(id: number): Promise<Event | null> {
   return prisma.event.findUnique({
     where: { id },
+    include: { organizer: true },
   });
 }
 
@@ -29,7 +36,7 @@ export function addEvent(newEvent: Event): Promise<Event> {
       date: newEvent.date,
       time: newEvent.time,
       petsAllowed: newEvent.petsAllowed,
-      organizer: newEvent.organizer
+      organizer: newEvent.organizer ? { connect: { id: newEvent.organizer.id } } : undefined
     }
   });
 }

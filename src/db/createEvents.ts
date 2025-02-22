@@ -1,3 +1,4 @@
+// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/src/db/createEvents.ts
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -76,19 +77,22 @@ export async function createEvents() {
 
   const chiangMaiOrg = await prisma.organizer.create({
     data: {
-      name: 'Chiang Mai'
+      name: 'Chiang Mai',
+      contact: 'contact@chiangmai.org'
     }
   });
 
   const cmuOrg = await prisma.organizer.create({
     data: {
-      name: 'Chiang Mai University'
+      name: 'Chiang Mai University',
+      contact: 'contact@cmu.ac.th'
     }
   });
 
   const camtOrg = await prisma.organizer.create({
     data: {
-      name: 'CAMT'
+      name: 'CAMT',
+      contact: 'contact@camt.ac.th'
     }
   });
 

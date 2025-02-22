@@ -10,7 +10,7 @@ const events: Event[] = [
         date: "2021-07-01",
         time: "19:00",
         petsAllowed: false,
-        organizer: "Live Nation"
+        organizer: { id: 1, name: "Live Nation", contact: "info@livenation.com" }
     },
     {
         id: 2,
@@ -21,7 +21,7 @@ const events: Event[] = [
         date: "2021-07-15",
         time: "12:00",
         petsAllowed: true,
-        organizer: "Festival Republic"
+        organizer: { id: 2, name: "Festival Republic", contact: "info@festivalrepublic.com" }
     },
     {
         id: 3,
@@ -32,7 +32,7 @@ const events: Event[] = [
         date: "2021-08-01",
         time: "15:00",
         petsAllowed: false,
-        organizer: "Premier League"
+        organizer: { id: 3, name: "Premier League", contact: "info@premierleague.com" }
     },
     {
         id: 4,
@@ -43,7 +43,7 @@ const events: Event[] = [
         date: "2021-09-10",
         time: "19:00",
         petsAllowed: true,
-        organizer: "Jazz Fest"
+        organizer: { id: 4, name: "Jazz Fest", contact: "info@jazzfest.com" }
     },
     {
         id: 5,
@@ -54,7 +54,7 @@ const events: Event[] = [
         date: "2021-10-05",
         time: "18:00",
         petsAllowed: false,
-        organizer: "NYC Theatre Group"
+        organizer: { id: 5, name: "NYC Theatre Group", contact: "info@nyctheatregroup.com" }
     },
     {
         id: 6,
@@ -65,7 +65,7 @@ const events: Event[] = [
         date: "2021-11-20",
         time: "12:00",
         petsAllowed: true,
-        organizer: "Foodie Events"
+        organizer: { id: 6, name: "Foodie Events", contact: "info@foodieevents.com" }
     }
 ];
 

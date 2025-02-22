@@ -14,7 +14,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model event {
+model Event {
   id          Int      @id @default(autoincrement())
   category    String
   title       String
@@ -24,11 +24,12 @@ model event {
   time        String
   petsAllowed Boolean
   organizerId Int?
-  organizer   organizer? @relation(fields: [organizerId], references: [id])
+  organizer   Organizer? @relation(fields: [organizerId], references: [id])
 }
 
-model organizer {
+model Organizer {
   id      Int      @id @default(autoincrement())
   name    String
-  events  event[]
+  contact String
+  events  Event[]
 }
