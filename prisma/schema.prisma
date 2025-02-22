@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// filepath: /C:/Users/ASUS/Thanaphat-Sr-713-Lab02/prisma/schema.prisma
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -22,5 +23,12 @@ model event {
   date        String
   time        String
   petsAllowed Boolean
-  organizer   String
+  organizerId Int?
+  organizer   organizer? @relation(fields: [organizerId], references: [id])
+}
+
+model organizer {
+  id      Int      @id @default(autoincrement())
+  name    String
+  events  event[]
 }
