@@ -1,8 +1,8 @@
 import type { Event } from "./Event";
 
 export type Organizer = {
-  id: number;
+  id?: number;
   name: string;
-  contact: string;
+  contact?: string;
   events?: Event[];
 };

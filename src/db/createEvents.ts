@@ -64,13 +64,13 @@ export async function createEvents() {
   for (const event of events) {
     await prisma.event.create({
       data: {
-        category: event.category,
-        title: event.title,
-        description: event.description,
-        location: event.location,
-        date: event.date,
-        time: event.time,
-        petsAllowed: event.petsAllowed
+        category: event.category || '',
+        title: event.title || '',
+        description: event.description || '',
+        location: event.location || '',
+        date: event.date || '',
+        time: event.time || '',
+        petsAllowed: event.petsAllowed || false
       }
     });
   }
